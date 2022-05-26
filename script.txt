@@ -18,20 +18,35 @@ public class HandHeldScript : MonoBehaviour
 
     void Update()
     {
+        ChangeTheObjectPosition();
+    }
+
+    void ChangeTheObjectPosition()
+    {
         if (Input.GetMouseButton(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = MouseRay();
             if(Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity))
             {
-                Vector3 ScreenPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, cameraZdistance);
-		Vector3 NewWorldPosition = mainCamera.ScreenToWorldPoint(ScreenPosition);
-		transform.position = NewWorldPosition;
+                ChangeCameraPos();
             }
         }
-        if (Input.GetMouseButtonUp(0)) // It is optional. When the player cannot hold the button anymore, the object will return its initial position.
+        if (Input.GetMouseButtonUp(0))
         {
             transform.position = firstCameraPos;
         }
+    }
+
+    void ChangeCameraPos()
+    {
+        Vector3 ScreenPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, cameraZdistance);
+        Vector3 NewWorldPosition = mainCamera.ScreenToWorldPoint(ScreenPosition);
+        transform.position = NewWorldPosition;
+    }
+
+    private static Ray MouseRay()
+    {
+        return Camera.main.ScreenPointToRay(Input.mousePosition);
     }
 
     void CameraFunctions()

@@ -9,4 +9,11 @@ public class HandHeldScript : MonoBehaviour
     private Camera mainCamera;
     private float cameraZdistance; //transform the camera's position from world space into screen space in z direction
     private Vector3 firstCameraPos; //to determine the first camera position (In case of turning the object to initial position)
+
+    void Start()
+    {
+        mainCamera = Camera.main;
+        cameraZdistance = mainCamera.WorldToScreenPoint(transform.position).z;
+        firstCameraPos = transform.position;
+    }
 }
